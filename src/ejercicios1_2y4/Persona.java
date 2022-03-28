@@ -24,7 +24,7 @@ public class Persona {
 		}
 	}
 	public String mostrar() {
-		return this.nombre+": "+ edad() + " años. "+this.nac.get(nac.DAY_OF_YEAR);
+		return this.nombre+": "+ edad() + " años. "+ "Cumplea os: " + this.nac.get(nac.DAY_OF_MONTH)+"/"+(this.nac.get(nac.MONTH)+1)+"/"+this.nac.get(1)/*this.nac.get(nac.DAY_OF_YEAR)*/;
 	}
 	public boolean validarPassword(String clave) {
 		String test = StringMD.getStringMessageDigest(clave, StringMD.SHA256);

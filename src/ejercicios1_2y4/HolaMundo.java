@@ -3,7 +3,7 @@ import java.util.Calendar;
 public class HolaMundo {
 public static void main(String[]agrs) {
 	Calendar nacimiento = Calendar.getInstance();
-	nacimiento.set(2002, 04, 20);
+	nacimiento.set(2002, 03, 20);
 	Calendar hoy = Calendar.getInstance();
 	System.out.println(hoy.getTime());
 	System.out.println(hoy.get(1));

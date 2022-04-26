@@ -1,5 +1,7 @@
 package ejercicio;
 
-public class Anfitrion {
-
+public class Anfitrion extends PersonaRol{
+	//Atributos
+	private String usuario;
+	
 }

@@ -1,0 +1,50 @@
+/*Ejercicio 1*/
+f(a, 2).
+f(a, 3).
+f(b, 2).
+f(b, 4).
+f(c, 1).
+f(c, 2).
+/*Consultas:
+a. f(X, 1). Devuelve X=c, ya que es el unico valor asociado a 1
+b. f(X). Devuelve error, no hay una funcion f con un solo arg.
+c. f(a, X). Devuelve X=2 y X=3, son los valores asociados a a.
+d. f(c, 1). Devuelve true, ya que existe en la base de datos.
+e. f(X, Y). Devuelve todas las combinaciones posibles de X e Y
+f. f(2, a). Devuelve false, ya que no existe f(2,a)
+g. f(X, Y), f(X, 4). Devuelve todas las combinaciones de X e Y,
+Pero con la condicion de que X tiene que estar asociada a 4. Es
+decir, X=b ya que es el unico valor que tiene f(b,4)*/
+
+/*Ejercicio 2*/
+padre(leoncio,alberto).
+padre(leoncio,geronimo).
+padre(alberto,juan).
+padre(alberto,luis).
+padre(geronimo,luisa).
+hermano(A,B):- padre(Z,A), padre(Z,B).
+nieto(A,B):- padre(X,A), padre(B,X).
+
+/*consultas
+ * a) padre(alberto,luis)
+ * b) padre(luis,alberto)
+ * c) hermano(X,luis)
+ * d) nieto(luisa,X)
+ * e) nieto(X,Y)
+ */
+
+/*Ejercicio 3*/
+menu("Bombones de jamon","Locro","Dulce de batata").
+menu("Bombones de jamon","Locro","Alfajor nortenio").
+menu("Tarta de atun","Atados de repollo","Dulce de batata").
+menu("Tarta de atun","P.R.conH.yV.","flan").
+menu("Volovanes de atún","Matambre con espinacas y parmesano", "Torta moka").
+menu("Buñuelos de bacalao","Pollo romano con hierbas y vino","Alfajor norteño").
+
+/*Consultas
+ * a) menu(X,Y,Z)
+ * b) menu(X,Y,"Dulce de batata")
+ * c) menu(X,"Locro",Z)
+ * d) menu(X,"Pato a la naranja",Z)
+ * e) menu("Locro",Y,X)
+*/

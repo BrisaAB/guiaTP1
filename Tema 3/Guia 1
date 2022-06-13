@@ -286,27 +286,72 @@ carta(Entrada,Principal,Postre):- entrada(Entrada), principal(Principal), postre
 
 /*Ejercicio 8 */
 progenitor(marcelo,brisa).
-progeniror(milena,brisa).
+progenitor(milena,brisa).
 hombre(marcelo).
-mujer(milena).
-mujer(brisa).
+/*mujer(milena).
+mujer(brisa).*/
 padre(X,Y):- progenitor(X,Y), hombre(X).
 madre(X,Y):- progenitor(X,Y), mujer(X).
-abuelo(A,N):- padre(A,P), progenitor(P,A).
-abuela(A,N):- madre(A,P), progenitor(P,A).
+abuelo(A,N):- padre(A,P), progenitor(P,N).
+abuela(A,N):- madre(A,P), progenitor(P,N).
 hermano(Persona, Hermano):- padre(Padre,Persona), padre(Padre,Hermano),
     madre(Madre,Persona), madre(Madre,Hermano), Persona\=Hermano.
 hermanoVaron(Hermano,Persona):- hermano(Persona,Hermano), hombre(Hermano).
 hermana(Hermana,Persona):- hermano(Hermana,Persona), mujer(Hermana).
-/*Para hacer el de sucesor tengo que saber como hacer una recursividad
- * o algo asi*/
-
-es_madre(Persona):- madre(Persona,X).
-es_padre(Persona):- padre(Persona,X).
+es_madre(Persona):- madre(Persona,_).
+es_padre(Persona):- padre(Persona,_).
+sucesor(Sucesor,Antecesor):- progenitor(Antecesor,Sucesor).
+sucesor(Sucesor,Antecesor):- progenitor(X,Sucesor), sucesor(X,Antecesor).
 tia(Tia,Sobrino):- progenitor(X,Sobrino), hermana(Tia,X).
 /*Suponiendo que si tienen un hijo juntos es porque estan casados(?*/
 yerno(Yerno,Suegroa):- padre(Yerno,X), madre(Persona,X), progenitor(Suegroa,Persona).
 nuera(Nuera,Suegroa):- madre(Nuera,X), padre(Persona,X), progenitor(Suegroa,Persona).
 
 /*Ejercicio 9*/
-/*Ver en clases*/
+mujer(haydee).
+mujer(tania).
+hombre(livio).
+hombre(pedro).
+hombre(pepe).
+
+abogado(haydee).
+abogado(pedro).
+
+ingeniero(haydee).
+
+medico(tania).
+
+contador(livio).
+contador(pepe).
+
+novela(leones).
+novela(rayuela).
+novela(karamazov).
+
+libro(octaedro).
+libro(inventario).
+
+cuento(octaedro).
+
+poemas(inventario).
+
+largo(rayuela).
+largo(karamazov).
+largo(inventario).
+
+corto(octaedro).
+corto(leones).
+
+
+
+gusta(pedro,B):- libro(B), cuento(B).
+gusta(A,B):- abogado(A), novela(B), largo(B).
+gusta(A,B):- ingeniero(A), novela(B).
+gusta(A,B):- mujer(A), libro(B), largo(B).
+gusta(A,B):- contador(A), hombre(A), libro(B).
+gusta(livio,rayuela).
+
+/* consultas:
+ * a) gusta(livio,B)
+ * b) gusta(A,leones)
+ * c) libro(A), corto(a)*/

@@ -1,9 +1,51 @@
 /*Ejercicio 1*/
 
 factorial(0,1).
-factorial(N,F):- not(N == 0), N1 is N-1, factorial(N1, F1), F is F1*N.
+factorial(N,F):- N > 0, N1 is N-1, factorial(N1, F1), F is F1*N.
 
 /*Ejercicio 2*/
-contar(_,[],C):- .
-contar(E,[E,R],C):- C1 is C+1, contar(E,R,C1).
-contar(E,[X,R],C):- not(E==X), contar(E,R,C).
+contar(_,[],0).
+contar(E,[E|R],C):-  contar(E,R,C1), C is C1+1.
+contar(E,[X|R],C):-  not(E==X), contar(E,R,C).
+
+/*Ejercicio 3*/
+
+cantidad([],0).
+cantidad([_|Lista],Can):- cantidad(Lista,Can2), Can is Can2 + 1.
+
+/*Ejercicio 4*/
+
+suma([],0).
+suma([X|Resto],S):- suma(Resto,S2), S is S2 + X.
+
+/*Ejercicio 5*/
+
+positivos([],[]). /*Si la lista está vacía, devuelve una lista vacía*/
+positivos([X|Resto1],[X|LP]):- X > 0, positivos(Resto1,LP).
+positivos([X|Resto1],LP):- X =< 0, positivos(Resto1,LP).
+
+/*Ejercicio 6*/
+suma_lista([],[],[]).
+suma_lista([X|Res1],[Y|Res2],[S1|Suma]):- cantidad(Res1,C1), cantidad(Res2,C2),
+    C1 == C2, suma_lista(Res1,Res2,Suma), S1 is (X+Y).
+/*Ejercicio 7*/
+eliminar(_,[],[]).
+eliminar(Elem,[C|Res],[C|Resto]):- Elem \= C, eliminar(Elem,Res,Resto).
+eliminar(Elem,[Elem|Res],Resto):-  eliminar(Elem,Res,Resto).
+
+eliminar_dup([],[]).
+eliminar_dup([E|R1],[E|R2]):- eliminar(E,R1,L), eliminar_dup(L,R2).
+
+/* Ejercicio 8*/
+
+profundidad([],0).
+profundidad([_],1).
+profundidad([I,_,D],P):- profundidad(I,PI), profundidad(D,PD),
+    PI >= PD, P is PI + 1.
+profundidad([I,_,D],P):- profundidad(I,PI), profundidad(D,PD),PI < PD, P is  PD+1.  
+
+/* Ejercicio 9*/
+
+insertar(E,[],[E]).
+insertar(E,[Com|R],[Com,R,E]):- E >= Com.
+insertar(E,[Com|R],L):- E<Com, insertar(E,R,L).

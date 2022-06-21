@@ -1,0 +1,38 @@
+/*Ejercicio 1*/
+factorial(0,1):-!.
+/*factorial(Numero, Factorial) :- Numero > 0,
+NumeroAnt is Numero - 1,
+factorial(NumeroAnt, FactorialAnt),
+Factorial is Numero * FactorialAnt.
+*/
+/*Ejercicio 3*/
+
+eliminar_primero([],_,[]):-!. /*No es necesario*/
+eliminar_primero([Elem|Resto],Elem,Resto):-!.
+eliminar_primero([X|Resto],Elem,[X|Lista]):- eliminar_primero(Resto,Elem,Lista).
+
+/*Ejercicio 4*/
+
+agregar_nuevo(E,[],[E]):-!.
+agregar_nuevo(E,[E|R],[E|R]):-!.
+agregar_nuevo(E,[X|R],[X|Lista]):-agregar_nuevo(E,R,Lista).
+
+/*Ejercicio 5*/
+
+semejanza([],[],S):-S is 0,!.
+semejanza([],[_|R],S):- semejanza([],R,S1), S is S1-1,!.
+semejanza([_|R],[],S):- semejanza([],R,S1), S is S1-1,!.
+semejanza([X|R1],[X|R2],S):-  semejanza(R1,R2,S1), S is S1+1,!.
+semejanza([X|R1],[Y|R2],S):- X\=Y, semejanza(R1,R2,S1), S is S1-1.
+
+/*Ejercicio 6*/
+miembro(X,[X|_]).
+miembro(X,[_|R]):-miembro(X,R).
+dic([sanar, hola, sabana, sabalo, prueba, computadora, cartera, mate, termo, mesa, silla, sarna]).
+buscar_en_dic(_,[],[]):-!.
+buscar_en_dic(P,[E|R],[[E,S]|L]):- atom_chars(P,L1), atom_chars(E,L2), semejanza(L1,L2,S),
+    S>0,buscar_en_dic(P,R,L),!.
+buscar_en_dic(P,[E|R],L):- atom_chars(P,L1), atom_chars(E,L2), semejanza(L1,L2,S),
+    S=<0,buscar_en_dic(P,R,L).
+buscar(E,[E]):- dic(L1), miembro(E,L1),!.
+buscar(E,L):- dic(L1), buscar_en_dic(E,L1,L).

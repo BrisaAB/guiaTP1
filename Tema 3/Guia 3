@@ -36,3 +36,43 @@ buscar_en_dic(P,[E|R],L):- atom_chars(P,L1), atom_chars(E,L2), semejanza(L1,L2,S
     S=<0,buscar_en_dic(P,R,L).
 buscar(E,[E]):- dic(L1), miembro(E,L1),!.
 buscar(E,L):- dic(L1), buscar_en_dic(E,L1,L).
+/*Ejercicio 7*/
+reemplazar(_,_,Ins,_,_,_):- Ins <1,!, fail. %Ins debe ser mayor o igual a 1
+reemplazar(_,_,_,Cant,_,_):- Cant \= -1, Cant \= 0, Cant < 1,!, fail. %Cant debe ser mayor a 1 o igual a -1(como condicion de corte igual a 0).
+reemplazar(_,_,_,_,[],[]):-!.%si la lista esta vacia la devuelvo y corto recursion.
+reemplazar(_,_,_,0,Lista,Lista):-!.%si la cantidad de elementos a reemplazar es 0 devuelvo la lista como esta y corto recursion.
+reemplazar(Elem,Reem,1,-1,[Elem|Res],[Reem|Resultado]):-reemplazar(Elem,Reem,1,-1,Res,Resultado),!. %si la cantidad de elementos a reemplazar es -1 quiere decir que reemplazo todos.
+reemplazar(Elem,Reem,1,Cant,[Elem|Res],[Reem|Resultado]):- Cant2 is Cant-1,reemplazar(Elem,Reem,1,Cant2,Res,Resultado),!.%Si encontre el elemento y la instancia es 1 lo reemplazo y sigo buscando.
+reemplazar(Elem,Reem,1,Cant,[Prim|Res],[Prim|Resultado]):- reemplazar(Elem,Reem,1,Cant,Res,Resultado),!. % si Ins es 1 pero no encontre el elemento sigo buscando.
+reemplazar(Elem,Reem,Ins,Cant,[Prim|Res],[Prim|Resultado]):- Ins2 is Ins-1, reemplazar(Elem,Reem,Ins2,Cant,Res,Resultado).% si ins tiene un valor x y el elemento no esta primero a esta altura ya se que ins es >1 asi que
+%le resto 1 a ins y sigo buscando.
+
+/*Ejercicio 8*/
+conectado(a,b).
+conectado(a,d).
+conectado(b,c).
+conectado(b,e).
+conectado(c,g).
+conectado(g,s).
+conectado(g,f).
+conectado(f,e).
+conectado(f,d).
+
+conectados(X,Y):- conectado(Y,X).
+conectados(X,Y):- conectado(X,Y).
+
+miembro(X,[X|_]):-!.
+miembro(X,[_|R]):-miembro(X,R).
+
+
+agregar_nuevo(E,[],[E]):-!.
+agregar_nuevo(E,[E|R],[E|R]):-!.
+agregar_nuevo(E,[X|R],[X|Lista]):-agregar_nuevo(E,R,Lista).
+
+salir_aux(salida,Camino,Camino).
+salir_aux(Hab,Camino,Solucion):-
+conectados(Hab,X),not(miembro(X,Camino)),
+agregar_nuevo(X,Camino,Recorr), salir_aux(X,Recorr,Solucion).
+salir(Hab,Camino):- salir_aux(Hab,[Hab],Camino).
+salir(g,[g|salida]):-!.
+salir(X,[X|Salida]):- conectados(X,Y), salir(Y,Salida).

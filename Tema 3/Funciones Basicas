@@ -1,0 +1,38 @@
+%pertenece
+
+/*corte*/
+miembro(X,[X|_]):-!. %si lo encuentra corta y devuelve true
+/*recursion*/
+miembro(X,[_|R]):-miembro(X,R). %si no lo encuentra sigue buscando.
+                    %Si la lista se queda vacia y no encontro nada devuelve false.
+
+%elimina repetidos
+/*corte*/
+elimina_repe([],[]):-!. %si la lista esta vacia devuelve lista vacia y corta recursion
+/*recursion*/
+elimina_repe([E|C],R):- elimina_repe(C,R), miembro(E,R),!. %si E esta en el en la lista C, no lo agrega
+elimina_repe([E|C],[E|R]):- elimina_repe(C,R). %Como E paso la prueba anterior (es decir, no esta repetido en C), lo agrega a la lista R .
+
+
+%Recorrer arboles
+/*Normales*/
+/*Este funciona sacandole el corte a miembro*/
+/*corte*/
+caminos([N],[N]):-!. %Si es una lista de un elemento, la devuelvo
+/*recursividad*/
+caminos([N|LH],[N|C]):- miembro(X,LH), caminos(X,C). %busco todos los hijos de N con miembro y Busco los caminos.
+     
+/*Binarios*/
+
+caminos2([],[]):-!.
+caminos2([N],[N]):-!.
+
+caminos2([I,N,_],[N|CI]):- caminos2(I,CI).
+caminos2([_,N,D],[N|CD]):- caminos2(D,CD).
+
+%OPERACIONES CON listas
+
+
+        
+
+

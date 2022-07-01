@@ -28,3 +28,28 @@ swype(L,_):- not(valida(L)), write('La lista no debe contener numeros \n'),!,fai
 
 /*swype es un wraper que pasa el diccionario de palabras a swype_aux*/
 swype(L,R):- palabras(Pal), swipe_aux(L,Pal,R).
+
+%Parcial 2014
+
+%sumar
+/*corte*/
+sumar([],0):-!.
+
+/*recursion*/
+sumar([E1|R],Suma):- sumar(R,Suma2), Suma is Suma2 + E1.
+
+%caminos
+/*corte*/
+caminos([N],[N]):-!.
+/*recursividad*/
+caminos([N|LH],[N|C]):- miembro(X,LH), caminos(X,C).
+
+%mayor valor
+mayor_valor([],0):-!.
+
+mayor_valor([E|Lc],MV):- sumar(E,Sum1), mayor_valor(Lc,MV), MV > Sum1,!.
+mayor_valor([E|_],Sum1):-sumar(E,Sum1).
+
+%caminos_max
+caminos_max([],[]):-!.
+caminos_max(A,Lc):- findall(X,caminos(A,X),Lc1), mayor_valor(Lc1,MV), findall(X,(caminos(A,X),sumar(X,MV)),Lc).

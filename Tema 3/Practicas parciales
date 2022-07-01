@@ -1,0 +1,30 @@
+%Tema1 parcial 2019
+palabras(['hola','hoja','hija','casa','pelota']).
+
+%Busca letra
+miembro(X,[X|_]):-!.
+miembro(X,[_|R]):-miembro(X,R).
+
+%validacion
+valida([]).
+valida([E|L]):- not(number(E)), valida(L).
+
+%busca palabra
+/*corte*/
+busca(_,[]):-!.
+/*recursion*/
+busca(Letras,[L1|R]):- miembro(L1,Letras), busca(Letras,R). /*si una letra no esta en la lista letras va a fallar*/
+
+%funcion aux
+/*corte*/
+swipe_aux(_,[],[]):-!.
+/*recursion*/
+swipe_aux(L,[P1|Dic],[P1|R]):- atom_chars(P1,Lp1), busca(L,Lp1), swipe_aux(L,Dic,R),!. %si la primera palabra de la lista se puede formar con las letras de la lista la sumo al resultado y sigo buscando.
+swipe_aux(L,[_|Dic],R):- swipe_aux(L,Dic,R). %si la primera palabra de la lista no se puede formar, sigo buscando en el diccionario.
+
+%funcion
+/*fallo*/
+swype(L,_):- not(valida(L)), write('La lista no debe contener numeros \n'),!,fail.
+
+/*swype es un wraper que pasa el diccionario de palabras a swype_aux*/
+swype(L,R):- palabras(Pal), swipe_aux(L,Pal,R).

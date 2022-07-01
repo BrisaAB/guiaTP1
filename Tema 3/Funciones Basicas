@@ -31,6 +31,32 @@ caminos2([I,N,_],[N|CI]):- caminos2(I,CI).
 caminos2([_,N,D],[N|CD]):- caminos2(D,CD).
 
 %OPERACIONES CON listas
+/*union*/
+%corte
+union([],[],[]):-!. %Si ambas listas están vacías, devuelvo una lista vacía.
+%comportamiento
+union([],[E2|C2],U):-miembro(E2,U), union([],C2,U),!.  %Si el primer elemento de la segunda lista está en la lista que voy a devolver, no lo agrego.
+union([],[E2|C2],[E2|U]):-union([],C2,U),!.  % Si el primer elemento de la segunda lista no está en la que voy a devolver, lo agrego.
+union([E1|C1],C2,U):-miembro(E1,C1), union(C1,C2,U),!. %Por estas funciones pasa primero, y es lo mismo que en las dos de arriba pero para la primer lista.
+union([E1|C1],C2,[E1|U]):-union(C1,C2,U).
+
+/*interseccion*/
+%corte
+interseccion([],_,[]):-!. %si la primer lista está vacía, no hay intersección(devuelvo lista vacía). No hace falta evaluar la segunda xq solo le saco elementos a la primer lista.
+                        %Si me pasan la segunda lista vacía funciona igual.
+%comportamiento
+interseccion([E1|C1],C2,[E1|I]):- miembro(E1,C2), interseccion(C1,C2,I),!. %Si el elemento 1 está en el conjunto 2, meto en elemento en la lista que voy a devolver.
+interseccion([_|C1],C2,I):- interseccion(C1,C2,I). %Si no está no lo meto y sigo buscando.
+
+/*diferencia*/
+
+%corte
+diferencia([],_,[]):-!. %Si el primer conjunto está vacío devuelvo una lista vacía.
+
+%comportamiento
+diferencia([Elem|C1],C2,U):- miembro(Elem,C2), diferencia(C1,C2,U), !. %Si el elemento 1 está en el conjunto 2 no lo meto en la lista y sigo buscando.
+diferencia([E1|C1],C2,[E1|U]):- diferencia(C1,C2,U). %Si el elemento 1 no está en el conjunto 2 lo meto en la lista y sigo buscando.
+
 
 
         
